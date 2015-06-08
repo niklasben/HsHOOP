@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 08. Jun 2015 um 11:07
+-- Erstellungszeit: 08. Jun 2015 um 14:51
 -- Server Version: 5.6.20
 -- PHP-Version: 5.5.15
 
@@ -113,12 +113,24 @@ CREATE TABLE IF NOT EXISTS `production` (
   `re_use_fator` float DEFAULT NULL,
   `mechanisation` float DEFAULT NULL,
   `production_sites` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `no_production_sites` int(3) DEFAULT NULL,
   `intended_production_vol` int(10) DEFAULT NULL,
   `production_lead_time` time(6) DEFAULT NULL,
   `cycle_time` time(6) DEFAULT NULL,
   `degree_material_utilisation` float DEFAULT NULL,
   `no_parts` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `prod_sites`
+--
+
+CREATE TABLE IF NOT EXISTS `prod_sites` (
+`id` int(10) NOT NULL,
+  `city` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `state` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `country` varchar(50) COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -194,6 +206,12 @@ ALTER TABLE `production`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `prod_sites`
+--
+ALTER TABLE `prod_sites`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `stiffness_data`
 --
 ALTER TABLE `stiffness_data`
@@ -240,6 +258,11 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `production`
 MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `prod_sites`
+--
+ALTER TABLE `prod_sites`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `stiffness_data`
 --
 ALTER TABLE `stiffness_data`
@@ -249,6 +272,58 @@ MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `weights`
 MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints der exportierten Tabellen
+--
+
+--
+-- Constraints der Tabelle `joining_process`
+--
+ALTER TABLE `joining_process`
+ADD CONSTRAINT `model_joining_process` FOREIGN KEY (`id`) REFERENCES `model` (`id`);
+
+--
+-- Constraints der Tabelle `lengths`
+--
+ALTER TABLE `lengths`
+ADD CONSTRAINT `model_lengths` FOREIGN KEY (`id`) REFERENCES `model` (`id`);
+
+--
+-- Constraints der Tabelle `manufacturer`
+--
+ALTER TABLE `manufacturer`
+ADD CONSTRAINT `model_manufacturer` FOREIGN KEY (`id`) REFERENCES `model` (`id`);
+
+--
+-- Constraints der Tabelle `material_mix`
+--
+ALTER TABLE `material_mix`
+ADD CONSTRAINT `model_material_mix` FOREIGN KEY (`id`) REFERENCES `model` (`id`);
+
+--
+-- Constraints der Tabelle `production`
+--
+ALTER TABLE `production`
+ADD CONSTRAINT `model_production` FOREIGN KEY (`id`) REFERENCES `model` (`id`);
+
+--
+-- Constraints der Tabelle `prod_sites`
+--
+ALTER TABLE `prod_sites`
+ADD CONSTRAINT `prod_prod_sites` FOREIGN KEY (`id`) REFERENCES `production` (`id`);
+
+--
+-- Constraints der Tabelle `stiffness_data`
+--
+ALTER TABLE `stiffness_data`
+ADD CONSTRAINT `model_stiffness` FOREIGN KEY (`id`) REFERENCES `model` (`id`);
+
+--
+-- Constraints der Tabelle `weights`
+--
+ALTER TABLE `weights`
+ADD CONSTRAINT `model_weights` FOREIGN KEY (`id`) REFERENCES `model` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
