@@ -1,2 +1,2 @@
 # HsHOOP
-Files for the praactical exam on Objectoriented Programming with PHP and MySQL
+Files for the practical exam on Objectoriented Programming with PHP and MySQL
